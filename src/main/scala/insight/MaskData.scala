@@ -1,7 +1,6 @@
 package insight
 
 import org.apache.spark.sql.SparkSession
-import com.typesafe.config.ConfigFactory
 import org.apache.spark.sql.functions.lit
 
 object MaskData {
@@ -11,11 +10,9 @@ object MaskData {
       .appName("MaskData")
       .getOrCreate
 
-    val config = ConfigFactory.load
-
     // obtaining aws creds
-    val accessKeyId = config.getString("aws.accessKeyId")
-    val secretAccessKey = config.getString("aws.secretAccessKey")
+    val accessKeyId = sys.env("AWS_ACCESS_KEY_ID")
+    val secretAccessKey = sys.env("AWS_SECRET_ACCESS_KEY")
 
     // setting aws creds so s3 access can be done to create dataframes
     spark.sparkContext.hadoopConfiguration.set("fs.s3n.awsAccessKeyId", accessKeyId)
