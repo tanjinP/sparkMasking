@@ -11,6 +11,7 @@ object MaskData {
       .getOrCreate
 
     val bucketName = args.head
+    val timeStamp = args(1)
 
     // obtaining aws creds
     val accessKeyId = sys.env("AWS_ACCESS_KEY_ID")
@@ -37,7 +38,7 @@ object MaskData {
       .format("com.databricks.spark.csv")
       .option("header", "true")
       .mode("append")
-      .save(s"s3n://$bucketName/data/") // TODO may want to hardcode output file format - not just folder location
+      .save(s"s3n://$bucketName/data/csv-$timeStamp")
 
     spark.stop
   }
