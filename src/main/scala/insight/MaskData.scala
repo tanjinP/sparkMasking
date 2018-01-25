@@ -10,6 +10,8 @@ object MaskData {
       .appName("MaskData")
       .getOrCreate
 
+    args.headOption.foreach(println)
+
     // obtaining aws creds
     val accessKeyId = sys.env("AWS_ACCESS_KEY_ID")
     val secretAccessKey = sys.env("AWS_SECRET_ACCESS_KEY")
