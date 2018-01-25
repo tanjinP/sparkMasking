@@ -10,7 +10,7 @@ object MaskData {
       .appName("MaskData")
       .getOrCreate
 
-    args.headOption.foreach(println)
+    val bucketName = args.head
 
     // obtaining aws creds
     val accessKeyId = sys.env("AWS_ACCESS_KEY_ID")
@@ -26,7 +26,7 @@ object MaskData {
       .format("com.databricks.spark.csv")
       .option("header", "true")
       .option("inferSchema", "true")
-      .load("s3n://vts-dummyData/csv/company-20180121_185043.csv") // TODO parameterize the time stamp
+      .load(s"s3n://$bucketName/csv/company-20180121_185043.csv") // TODO parameterize the time stamp
 
     // apply masking logic
     // TODO be dynamic in the type of mask (hardcoded to String here)
@@ -37,7 +37,7 @@ object MaskData {
       .format("com.databricks.spark.csv")
       .option("header", "true")
       .mode("append")
-      .save("s3n://vts-dummyData/data/") // TODO may want to hardcode output file format - not just folder location
+      .save(s"s3n://$bucketName/data/") // TODO may want to hardcode output file format - not just folder location
 
     spark.stop
   }
