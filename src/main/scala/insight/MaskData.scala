@@ -11,7 +11,6 @@ object MaskData {
       .getOrCreate
 
     val bucketName = args.head
-    val timeStamp = args(1)
 
     // obtaining aws creds
     val accessKeyId = sys.env("AWS_ACCESS_KEY_ID")
@@ -27,7 +26,7 @@ object MaskData {
       .format("com.databricks.spark.csv")
       .option("header", "true")
       .option("inferSchema", "true")
-      .load(s"s3n://$bucketName/csv/activity-logs-$timeStamp.csv") // TODO parameterize the time stamp
+      .load(s"s3n://$bucketName/csv/activity-logs.csv") // TODO parameterize the time stamp
 
     // apply masking logic
     // TODO be dynamic in the type of mask (hardcoded to String here)
@@ -38,7 +37,7 @@ object MaskData {
       .format("com.databricks.spark.csv")
       .option("header", "true")
       .mode("append")
-      .save(s"s3n://$bucketName/data/csv-$timeStamp")
+      .save(s"s3n://$bucketName/data/csv")
 
     spark.stop
   }
