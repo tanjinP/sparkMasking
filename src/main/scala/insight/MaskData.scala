@@ -27,11 +27,11 @@ object MaskData {
       .format("com.databricks.spark.csv")
       .option("header", "true")
       .option("inferSchema", "true")
-      .load(s"s3n://$bucketName/csv/company-20180121_185043.csv") // TODO parameterize the time stamp
+      .load(s"s3n://$bucketName/csv/activity-logs-$timeStamp.csv") // TODO parameterize the time stamp
 
     // apply masking logic
     // TODO be dynamic in the type of mask (hardcoded to String here)
-    val masked = df.withColumn("name", lit("MASKED"))
+    val masked = df.withColumn("status", lit("MASKED"))
 
     // writing back to s3
     masked.coalesce(1).write // 1 could be bad?
