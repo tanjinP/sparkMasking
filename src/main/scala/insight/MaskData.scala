@@ -25,7 +25,6 @@ object MaskData {
     spark.read
       .format("com.databricks.spark.csv")
       .option("header", "true")
-      .option("inferSchema", "true")
       .load(s"s3n://$bucketName/csv/activity-logs.csv") // TODO parameterize the time stamp
       .withColumn("status", lit("MASKED")) // TODO be dynamic in the type of mask (hardcoded to String here)
       .write
