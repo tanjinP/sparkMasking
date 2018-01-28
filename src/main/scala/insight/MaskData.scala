@@ -30,7 +30,7 @@ object MaskData {
       .withColumn("status", lit("MASKED")) // TODO be dynamic in the type of mask (hardcoded to String here)
       .write
       .mode("append")
-      .save(s"s3n://$bucketName/data/csv")
+      .csv(s"s3n://$bucketName/data/csv")
 
     spark.stop
   }
