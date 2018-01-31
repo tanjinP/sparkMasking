@@ -28,10 +28,11 @@ for table in tables:
     cur = con.cursor()
 
     # executing query to load data into redshift
-    cur.execute("copy $s from '%s%s' credentials 'aws_access_key_id=%s;aws_secret_access_key=%s'
-    delimiter ',' region 'us-east-1' maxerror as 250;" % (table, bucket_folder, csv_to_write, access_key, secret_key))
+    cur.execute("""copy %s from '%s%s' credentials 'aws_access_key_id=%s;aws_secret_access_key=%s'
+    delimiter ',' region 'us-east-1' maxerror as 250;""" % (table, bucket_folder, table, access_key, secret_key))
 
     cur.close()
     # commit necessary to enact query into redshift
     con.commit()
-    con.close()
+
+con.close()
