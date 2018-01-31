@@ -34,6 +34,7 @@ object MaskData {
         .load(s"s3n://vts-dummyData/csv/${config.name}.csv")
         .withMultipleColumns(config.mask.map(masking):_*)
         .write
+        .option("mapreduce.fileoutputcommitter.algorithm.version", "2")
         .mode("append")
         .csv(s"s3n://vts-dummyData/data/${config.name}")
     }
