@@ -32,7 +32,7 @@ object MaskData {
         .format("com.databricks.spark.csv")
         .option("header", "true")
         .load(s"s3n://vts-dummyData/csv/${config.name}.csv")
-        .withMultipleColumns(config.mask.map(masking):_*)
+        .withColumns(config.mask.map(masking):_*)
         .write
         .option("mapreduce.fileoutputcommitter.algorithm.version", "2")
         .mode("append")
